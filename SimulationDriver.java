@@ -12,4 +12,7 @@ package iVoteSimulator;
 
 public class SimulationDriver {
 
+    public SimulationDriver() {
+        
+    }
 }
