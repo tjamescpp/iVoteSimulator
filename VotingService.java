@@ -18,20 +18,46 @@ import java.util.ArrayList;
  */
 public class VotingService {
     
-    Question questionType;
-    ArrayList<String> answerList;
+    // question types
+    protected SingleChoiceQuestion singleChoiceQuestion;
+    protected MultipleChoiceQuestion multipleChoiceQuestion;
+
+    // possible answers
+    private ArrayList<String> answers;
+
+    // counting variables for answers stats
     int countA;
     int countB;
     int countC;
     int countD;
     
-    public VotingService(Question questionType, ArrayList<String> answerList) {
-        this.questionType = questionType;
-        this.answerList = answerList;
+    public VotingService(SingleChoiceQuestion questionType) {
+        singleChoiceQuestion = questionType;
+        answers = new ArrayList<String>();
+        createSingleChoiceQuestions();
+    }
+
+    public VotingService(MultipleChoiceQuestion questionType) {
+        multipleChoiceQuestion = questionType;
+        // createMultipleChoiceQuestion();
+    }
+
+    public void createSingleChoiceQuestions(){
+
+        // Create questions
+        singleChoiceQuestion.addQuestion("1. The class that a subclass is derived from is called what?");
+        singleChoiceQuestion.addQuestion("2. The class that is derived from superclass is called what?");
+        singleChoiceQuestion.addQuestion("3. What is an interface in java?");
+
+        // Create possible answers
+        answers.add("(A) Superclass");
+        answers.add("(B) Subclass");
+        answers.add("(C) An abstract type that classes must implement");
+        answers.add("(D) None of the above");
     }
 
     // calculate student answer stats
-    public void calcStats() {
+    public void calcStats(ArrayList<String> answerList) {
         for (int i = 0; i < answerList.size(); i++) {
             if (answerList.get(i) == "A")
                 countA += 1;
@@ -45,20 +71,29 @@ public class VotingService {
     }
 
     // getters and setters
-    public Question getQuestionType() {
-        return questionType;
+
+    public SingleChoiceQuestion getSingleChoiceQuestion() {
+        return singleChoiceQuestion;
     }
 
-    public void setQuestionType(Question questionType) {
-        this.questionType = questionType;
+    public void setSingleChoiceQuestion(SingleChoiceQuestion singleChoiceQuestion) {
+        this.singleChoiceQuestion = singleChoiceQuestion;
     }
 
-    public ArrayList<String> getAnswerList() {
-        return answerList;
+    public MultipleChoiceQuestion getMultipleChoiceQuestion() {
+        return multipleChoiceQuestion;
     }
 
-    public void setAnswerList(ArrayList<String> answerList) {
-        this.answerList = answerList;
+    public void setMultipleChoiceQuestion(MultipleChoiceQuestion multipleChoiceQuestion) {
+        this.multipleChoiceQuestion = multipleChoiceQuestion;
+    }
+
+    public ArrayList<String> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(ArrayList<String> answers) {
+        this.answers = answers;
     }
 
     public int getCountA() {
@@ -91,7 +126,5 @@ public class VotingService {
 
     public void setCountD(int countD) {
         this.countD = countD;
-    }
-
-    
+    }  
 }

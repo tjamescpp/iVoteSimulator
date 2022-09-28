@@ -1,5 +1,6 @@
 package iVoteSimulator;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /*
@@ -19,9 +20,12 @@ import java.util.Random;
 public class SimulationDriver {
 
     public static void main(String[] args) {
-        Student student = new Student();
-        SingleChoiceQuestion question = new SingleChoiceQuestion();
+
         VotingService voteService;
+        SingleChoiceQuestion singleChoiceQuestion = new SingleChoiceQuestion();
+        // MultipleChoiceQuestion multipleChoiceQuestion = new MultipleChoiceQuestion();
+        ArrayList<String> answers = new ArrayList<String>();
+        Student student = new Student();
         Random rand = new Random();
         Integer answer = 0;
         String correctAnswer = "";
@@ -31,48 +35,59 @@ public class SimulationDriver {
         // Simulator output
         System.out.println("\n===== Welcome to iVote! =====\n");
 
+        // Start voting service
+        voteService = new VotingService(singleChoiceQuestion);
+        singleChoiceQuestion = voteService.getSingleChoiceQuestion();
+
         // Generate a random Single Choice question
         j = rand.nextInt(3);
-        System.out.println(question.getQuestions().get(j));
-
-        // Get correct answer
-        if (j == 0)
-            correctAnswer = question.getCorrectAnswer1();
-        else if (j == 1)
-            correctAnswer = question.getCorrectAnswer2();
-        else if (j == 2)
-            correctAnswer = question.getCorrectAnswer3();
+        System.out.println(singleChoiceQuestion.getQuestions().get(j));
 
         // Print answers for students to choose from
-        System.out.println(
-            "\n(A) " + question.getAnswer1() + 
-            "\n(B) " + question.getAnswer2() + 
-            "\n(C) " + question.getAnswer3() + 
-            "\n(D) " + question.getAnswer4()
-        );
-        
+        for (i = 0; i < 4; i++) {
+            System.out.println(voteService.getAnswers().get(i));
+        }
+
+        // Correct answer
+        if (j == 0) {
+            singleChoiceQuestion.setCorrectAnswer("Superclass");
+            correctAnswer = singleChoiceQuestion.getCorrectAnswer();
+        } else if (j == 1) {
+            singleChoiceQuestion.setCorrectAnswer("Subclass");
+            correctAnswer = singleChoiceQuestion.getCorrectAnswer();
+        } else if (j == 2) {
+            singleChoiceQuestion.setCorrectAnswer("An abstract type that classes must implement");
+            correctAnswer = singleChoiceQuestion.getCorrectAnswer();
+        }
+
         // This loop generates 10 random students (ID numbers) and 10 random answers
-        for (i = 0; i < 10; i++){
-            studentId = rand.nextInt(1000) + 1000;
+        for (i = 0; i < 10; i++) {
+            studentId = rand.nextInt(1000) + 1000; // between 1000 - 9999
             student.addStudents(studentId);
 
             answer = rand.nextInt(4) + 1;
-            student.addAnswers(answer);
+
+            if (answer == 1)
+                answers.add("A");
+            else if (answer == 2)
+                answers.add("B");
+            else if (answer == 3)
+                answers.add("C");
+            else if (answer == 4)
+                answers.add("D");
         }
 
         // Voting service object to calculate stats
-        voteService = new VotingService(question, student.getAnswerList());
-        voteService.calcStats();
+        voteService.calcStats(answers);
 
         // Print student answers and stats
         System.out.println("\n===== Answers =====");
 
         System.out.println(
-            "\nA: " + voteService.getCountA() +
-            "\nB: " + voteService.getCountB() +
-            "\nC: " + voteService.getCountC() +
-            "\nD: " + voteService.getCountD()
-        );
+                "\nA: " + voteService.getCountA() +
+                        "\nB: " + voteService.getCountB() +
+                        "\nC: " + voteService.getCountC() +
+                        "\nD: " + voteService.getCountD());
 
         System.out.println("\nCorrect Answer: " + correctAnswer);
 
