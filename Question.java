@@ -3,7 +3,7 @@ package iVoteSimulator;
 import java.util.ArrayList;
 
 // Question interface
-public class Question {
+public class Question implements QuestionGenerator {
 
     private ArrayList<String> questions;
 
@@ -12,6 +12,7 @@ public class Question {
     }
 
     // add questions to an ArrayList 
+    @Override
     public void addQuestion(String question){
         questions.add(question);
     }     

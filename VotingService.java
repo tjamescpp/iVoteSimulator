@@ -22,8 +22,13 @@ public class VotingService {
     protected SingleChoiceQuestion singleChoiceQuestion;
     protected MultipleChoiceQuestion multipleChoiceQuestion;
 
+    // answers to questions
+    private ArrayList<String> singleChoiceAnswers;
+    private ArrayList<String> multipleChoiceAnswers;
+
     // possible answers
-    private ArrayList<String> answers;
+    private ArrayList<String> singleChoiceAnswerOptions;
+    private ArrayList<String> multipleChoiceAnswerOptions;
 
     // counting variables for answers stats
     int countA;
@@ -33,27 +38,56 @@ public class VotingService {
     
     public VotingService(SingleChoiceQuestion questionType) {
         singleChoiceQuestion = questionType;
-        answers = new ArrayList<String>();
+        singleChoiceAnswerOptions = new ArrayList<String>();
+        singleChoiceAnswers = new ArrayList<String>();
+
+        // add correct single choice answers
+        singleChoiceAnswers.add("(A) Superclass");
+        singleChoiceAnswers.add("(B) Subclass");
+        singleChoiceAnswers.add("(C) An abstract type that classes must implement");
+
         createSingleChoiceQuestions();
     }
 
     public VotingService(MultipleChoiceQuestion questionType) {
         multipleChoiceQuestion = questionType;
-        // createMultipleChoiceQuestion();
+        multipleChoiceAnswerOptions = new ArrayList<String>();
+        multipleChoiceAnswers = new ArrayList<String>();
+
+        // add correct multiple choice answers
+        multipleChoiceAnswers.add("(C) public int var3 = 100;");
+        multipleChoiceAnswers.add("(D) private int var4 = 100;");
+
+        createMultipleChoiceQuestions();
     }
 
     public void createSingleChoiceQuestions(){
 
-        // Create questions
+        // create questions
         singleChoiceQuestion.addQuestion("1. The class that a subclass is derived from is called what?");
-        singleChoiceQuestion.addQuestion("2. The class that is derived from superclass is called what?");
+        singleChoiceQuestion.addQuestion("2. The class that is derived from a superclass is called what?");
         singleChoiceQuestion.addQuestion("3. What is an interface in java?");
 
-        // Create possible answers
-        answers.add("(A) Superclass");
-        answers.add("(B) Subclass");
-        answers.add("(C) An abstract type that classes must implement");
-        answers.add("(D) None of the above");
+        // create possible answers
+        singleChoiceAnswerOptions.add("(A) Superclass");
+        singleChoiceAnswerOptions.add("(B) Subclass");
+        singleChoiceAnswerOptions.add("(C) An abstract type that classes must implement");
+        singleChoiceAnswerOptions.add("(D) None of the above");
+    }
+
+    public void createMultipleChoiceQuestions() {
+
+        // create questions
+        multipleChoiceQuestion.addQuestion("Which of the following variable declarations are correct?");
+
+        // create possible answers
+        multipleChoiceAnswerOptions.add("public interface TestInterface {" 
+        + "\n\t(A) int var1;" 
+        + "\n\t(B) final int var2" 
+        + "\n\t(C) public int var3 = 100;" 
+        + "\n\t(D) private int var4 = 100;" 
+        + "\n\t(E) public static final int var5 = 100;"
+        + "\n}");
     }
 
     // calculate student answer stats
@@ -76,6 +110,22 @@ public class VotingService {
         return singleChoiceQuestion;
     }
 
+    public ArrayList<String> getSingleChoiceAnswers() {
+        return singleChoiceAnswers;
+    }
+
+    public void setSingleChoiceAnswers(ArrayList<String> singleChoiceAnswers) {
+        this.singleChoiceAnswers = singleChoiceAnswers;
+    }
+
+    public ArrayList<String> getMultipleChoiceAnswers() {
+        return multipleChoiceAnswers;
+    }
+
+    public void setMultipleChoiceAnswers(ArrayList<String> multipleChoiceAnswers) {
+        this.multipleChoiceAnswers = multipleChoiceAnswers;
+    }
+
     public void setSingleChoiceQuestion(SingleChoiceQuestion singleChoiceQuestion) {
         this.singleChoiceQuestion = singleChoiceQuestion;
     }
@@ -88,12 +138,20 @@ public class VotingService {
         this.multipleChoiceQuestion = multipleChoiceQuestion;
     }
 
-    public ArrayList<String> getAnswers() {
-        return answers;
+    public ArrayList<String> getSingleChoiceAnswerOptions() {
+        return singleChoiceAnswerOptions;
     }
 
-    public void setAnswers(ArrayList<String> answers) {
-        this.answers = answers;
+    public void setChoiceAnswerOptions(ArrayList<String> singleChoiceAnswerOptions) {
+        this.singleChoiceAnswerOptions = singleChoiceAnswerOptions;
+    }
+
+    public ArrayList<String> getMultipleChoiceAnswerOptions() {
+        return multipleChoiceAnswerOptions;
+    }
+
+    public void setMultipleChoiceAnswerOptions(ArrayList<String> multipleChoiceAnswerOptions) {
+        this.multipleChoiceAnswerOptions = multipleChoiceAnswerOptions;
     }
 
     public int getCountA() {
