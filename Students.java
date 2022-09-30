@@ -24,9 +24,16 @@ public class Students {
         studentMap = new HashMap<Integer, String>();
     }
 
-    // adds to students to array
-    public void addStudents(Integer studentID) {
-        studentIdList.add(studentID.toString());
+    // checks for duplicate student ids and adds them to student list
+    public void addStudents(String studentId){
+        // checks for duplicate student ids
+        for (int j = 0; j < studentIdList.size(); j++){
+            if (studentId != studentIdList.get(j))
+                studentIdList.add(studentId);
+            else {
+                studentIdList.add(j, studentId);
+            }
+        }
     }
 
     // getters and setters

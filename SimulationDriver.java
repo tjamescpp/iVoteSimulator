@@ -23,7 +23,6 @@ public class SimulationDriver {
 
         SingleChoiceQuestion singleChoiceQuestion = new SingleChoiceQuestion();
         MultipleChoiceQuestion multipleChoiceQuestion = new MultipleChoiceQuestion();
-        Students student = new Students();
 
         System.out.println("\n===== Welcome to iVote! =====\n");
         singleQuestionSimulator(singleChoiceQuestion);
@@ -39,7 +38,7 @@ public class SimulationDriver {
         Integer answer = 0;
         String correctAnswer = "";
         String studentAnswer = "";
-        int studentId;
+        Integer studentId;
         int i, j;
 
         // Start voting service
@@ -61,7 +60,9 @@ public class SimulationDriver {
         // This loop generates 10 random students (ID numbers) and 10 random answers
         for (i = 0; i < 10; i++) {
             studentId = rand.nextInt(1000) + 1000; // between 1000 - 9999
-            student.addStudents(studentId);
+
+            // add student ids to student list
+            student.addStudents(studentId.toString());
 
             answer = rand.nextInt(4) + 1;
 
@@ -108,7 +109,7 @@ public class SimulationDriver {
         Integer answer = 0;
         String studentAnswer = "";
         // String correctAnswer = "";
-        int studentId;
+        Integer studentId;
         int i, j;
 
         // Start voting service
@@ -127,9 +128,12 @@ public class SimulationDriver {
         // and 20 random answers (2 for each student)
         for (i = 0; i < 10; i++) {
             studentId = rand.nextInt(1000) + 1000; // between 1000 - 9999
-            student.addStudents(studentId);
             studentAnswer = "";
 
+            // adds student ids to student list
+            student.addStudents(studentId.toString());
+
+            // generates 2 random answers per student
             for (j = 0; j < 2; j++) {
                 answer = rand.nextInt(4) + 1;
 
