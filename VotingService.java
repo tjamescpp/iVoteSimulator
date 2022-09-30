@@ -64,9 +64,9 @@ public class VotingService {
     public void createSingleChoiceQuestions(){
 
         // create questions
-        singleChoiceQuestion.addQuestion("1. The class that a subclass is derived from is called what?");
-        singleChoiceQuestion.addQuestion("2. The class that is derived from a superclass is called what?");
-        singleChoiceQuestion.addQuestion("3. What is an interface in java?");
+        singleChoiceQuestion.addQuestion("The class that a subclass is derived from is called what?");
+        singleChoiceQuestion.addQuestion("The class that is derived from a superclass is called what?");
+        singleChoiceQuestion.addQuestion("What is an interface in java?");
 
         // create possible answers
         singleChoiceAnswerOptions.add("(A) Superclass");

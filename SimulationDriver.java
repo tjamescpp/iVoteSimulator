@@ -23,23 +23,24 @@ public class SimulationDriver {
 
         SingleChoiceQuestion singleChoiceQuestion = new SingleChoiceQuestion();
         MultipleChoiceQuestion multipleChoiceQuestion = new MultipleChoiceQuestion();
+        Students student = new Students();
 
+        System.out.println("\n===== Welcome to iVote! =====\n");
         singleQuestionSimulator(singleChoiceQuestion);
         multiplChoiceSimulator(multipleChoiceQuestion);
     }
 
     public static void singleQuestionSimulator (SingleChoiceQuestion singleChoiceQuestion) {
+        Students student = new Students();
         VotingService voteService;
         ArrayList<String> answers = new ArrayList<String>();
-        Student student = new Student();
+        // Student student = new Student();
         Random rand = new Random();
         Integer answer = 0;
         String correctAnswer = "";
+        String studentAnswer = "";
         int studentId;
         int i, j;
-
-        // Simulator output
-        System.out.println("\n===== Welcome to iVote! =====\n");
 
         // Start voting service
         voteService = new VotingService(singleChoiceQuestion);
@@ -65,20 +66,29 @@ public class SimulationDriver {
             answer = rand.nextInt(4) + 1;
 
             if (answer == 1)
-                answers.add("A");
+                studentAnswer = "A";
             else if (answer == 2)
-                answers.add("B");
+                studentAnswer = "B";
             else if (answer == 3)
-                answers.add("C");
+                studentAnswer = "C";
             else if (answer == 4)
-                answers.add("D");
+                studentAnswer = "D";
+
+            // put studentId and studentAnswer in the student hash map
+            student.getStudentMap().put(studentId, studentAnswer);
+
+            // add student answer to answers list
+            answers.add(studentAnswer);
         }
 
         // Call function to calculate stats
         voteService.calcStats(answers);
 
-        // Print student answers and stats
-        System.out.println("\n===== Answers =====");
+        // print answer stats
+        System.out.println("\n--- Single Choice Answers ---");
+
+        // print students
+        System.out.println("\nStudents: " + student.getStudentMap());
 
         System.out.println(
                 "\nA: " + voteService.getCountA() +
@@ -90,17 +100,16 @@ public class SimulationDriver {
     }
 
     public static void multiplChoiceSimulator(MultipleChoiceQuestion multipleChoiceQuestion) {
+        Students student = new Students();
         VotingService voteService;
         ArrayList<String> answers = new ArrayList<String>();
-        Student student = new Student();
+        // Student student = new Student();
         Random rand = new Random();
         Integer answer = 0;
+        String studentAnswer = "";
         // String correctAnswer = "";
         int studentId;
         int i, j;
-
-        // Simulator output
-        System.out.println("\n===== Welcome to iVote! =====\n");
 
         // Start voting service
         voteService = new VotingService(multipleChoiceQuestion);
@@ -114,31 +123,44 @@ public class SimulationDriver {
             System.out.println(voteService.getMultipleChoiceAnswerOptions().get(i));
         } 
 
-        // This loop generates 10 random students (ID numbers) and 10 random answers
+        // This loop generates 10 random students (ID numbers) 
+        // and 20 random answers (2 for each student)
         for (i = 0; i < 10; i++) {
             studentId = rand.nextInt(1000) + 1000; // between 1000 - 9999
             student.addStudents(studentId);
+            studentAnswer = "";
 
-            // 2 answers are also generated for every student.
             for (j = 0; j < 2; j++) {
                 answer = rand.nextInt(4) + 1;
 
-                if (answer == 1)
+                if (answer == 1) {
+                    studentAnswer = studentAnswer + "A";
                     answers.add("A");
-                else if (answer == 2)
+                } else if (answer == 2) {
+                    studentAnswer = studentAnswer + "B";
                     answers.add("B");
-                else if (answer == 3)
+                } else if (answer == 3) {
+                    studentAnswer = studentAnswer + "C";
                     answers.add("C");
-                else if (answer == 4)
+                } else if (answer == 4) {
+                    studentAnswer = studentAnswer + "D";
                     answers.add("D");
-            }     
+                }    
+                
+            }
+
+            // put studentId and studentAnswer in the student hash map
+            student.getStudentMap().put(studentId, studentAnswer);
         }
 
         // Call function to calculate stats
         voteService.calcStats(answers);
 
-        // Print student answers and stats
-        System.out.println("\n===== Answers =====");
+        // print answer stats
+        System.out.println("\n--- Multiple Choice Answers ---");
+        
+        // print students
+        System.out.println("\nStudents: " + student.getStudentMap());
 
         System.out.println(
                 "\nA: " + voteService.getCountA() +
